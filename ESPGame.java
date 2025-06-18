@@ -1,9 +1,9 @@
 /*
  * Class: CMSC203 
- * Instructor: 
- * Description: This program tests a user's extrasensory perception (ESP) by having them guess randomly selected colors from a list in a file.
- * Due: MM/DD/YYYY
- * Platform/compiler: Java 17 / Eclipse or command-line
+ * Instructor: Professor Grinberg
+ * Description: This program tests a users extrasensory perception (ESP) by having them guess randomly selected colors from a list in a file.
+ * Due: 6/17/2025
+ * Platform/compiler: Java 17 / VS code
  * I pledge that I have completed the programming assignment independently. I have not copied the code from a student or any source. 
  * I have not given my code to any student.
  * Print your Name here: Xander Rivera
