@@ -1,186 +1,207 @@
 /*
  * Class: CMSC203 
- * Instructor: Professor Grinberg
- * Description: This program tests a users extrasensory perception (ESP) by having them guess randomly selected colors from a list in a file.
- * Due: 6/17/2025
- * Platform/compiler: Java 17 / VS code
- * I pledge that I have completed the programming assignment independently. I have not copied the code from a student or any source. 
+ * Instructor: Professor Eivazi
+ * Description: ESP Game - Tests extrasensory perception by having the user guess randomly selected colors.
+ * Due: 09/15/25
+ * Platform/compiler: Eclipse
+ * I pledge that I have completed the programming assignment 
+ * independently. I have not copied the code from a student or any source. 
  * I have not given my code to any student.
- * Print your Name here: Xander Rivera
+ * Print your Name here: Xander Alfredo Rivera
  */
 
- import java.io.File;
- import java.io.FileWriter;
- import java.io.IOException;
- import java.util.Random;
- import java.util.Scanner;
- 
- public class ESPGame {
- 
-     public static void main(String[] args) throws IOException {
-         // Declare color constants (up to 16)
-         final String COLOR1 = "black";
-         final String COLOR2 = "white";
-         final String COLOR3 = "gray";
-         final String COLOR4 = "silver";
-         final String COLOR5 = "maroon";
-         final String COLOR6 = "red";
-         final String COLOR7 = "purple";
-         final String COLOR8 = "fuchsia";
-         final String COLOR9 = "green";
-         final String COLOR10 = "lime";
-         final String COLOR11 = "olive";
-         final String COLOR12 = "yellow";
-         final String COLOR13 = "navy";
-         final String COLOR14 = "blue";
-         final String COLOR15 = "teal";
-         final String COLOR16 = "aqua";
- 
-         final int MAX_COLORS = 16;
-         Scanner scanner = new Scanner(System.in);
-         String playAgain;
- 
-         do {
-             int option = 0;
-             // Menu loop with input validation
-             while (option < 1 || option > 4) {
-                 System.out.println("\nWelcome to ESP - extrasensory perception!");
-                 System.out.println("Would you please choose one of the 4 options from the menu:");
-                 System.out.println("1. Display first 16 colors");
-                 System.out.println("2. Display first 10 colors");
-                 System.out.println("3. Display first 5 colors");
-                 System.out.println("4. Exit");
-                 System.out.print("Enter the option: ");
-                 if (scanner.hasNextInt()) {
-                     option = scanner.nextInt();
-                     scanner.nextLine(); // clear newline
-                     if (option < 1 || option > 4) {
-                         System.out.println("Invalid choice. Please enter a number from 1 to 4.");
-                     }
-                 } else {
-                     System.out.println("Invalid input. Please enter a number.");
-                     scanner.nextLine(); // discard bad input
-                 }
-             }
- 
-             if (option == 4) {
-                 break;
-             }
- 
-             System.out.print("Enter the filename: ");
-             String filename = scanner.nextLine();
- 
-             File colorFile = new File(filename);
-             if (!colorFile.exists()) {
-                 System.out.println("File not found. Exiting...");
-                 return;
-             }
- 
-             // Read and print color options
-             Scanner fileScanner = new Scanner(colorFile);
-             int limit = (option == 1) ? 16 : (option == 2) ? 10 : 5;
-             System.out.println("\nThere are colors from a file:");
-             int count = 0;
-             String displayedColors = "";
-             while (fileScanner.hasNextLine() && count < limit) {
-                 count++;
-                 String color = fileScanner.nextLine().toLowerCase();
-                 System.out.println(count + " " + color);
-                 displayedColors += color + "\n";
-             }
-             fileScanner.close();
- 
-             int correct = 0;
-             Random rand = new Random();
- 
-             // 3 rounds of guessing
-             for (int i = 1; i <= 3; i++) {
-                 System.out.println("\nRound " + i);
-                 System.out.println("I am thinking of a color.");
-                 System.out.println("Is it one of the list of colors above?");
-                 String guess;
-                 boolean validGuess = false;
- 
-                 do {
-                     System.out.print("Enter your guess: ");
-                     guess = scanner.nextLine().toLowerCase();
-                     Scanner checker = new Scanner(displayedColors);
-                     while (checker.hasNextLine()) {
-                         String line = checker.nextLine();
-                         if (line.equalsIgnoreCase(guess)) {
-                             validGuess = true;
-                             break;
-                         }
-                     }
-                     checker.close();
-                     if (!validGuess) {
-                         System.out.println("Invalid color. Please enter one of the listed colors exactly.");
-                     }
-                 } while (!validGuess);
- 
-                 int selected = rand.nextInt(MAX_COLORS) + 1;
-                 String chosenColor = "";
- 
-                 if (selected == 1) chosenColor = COLOR1;
-                 else if (selected == 2) chosenColor = COLOR2;
-                 else if (selected == 3) chosenColor = COLOR3;
-                 else if (selected == 4) chosenColor = COLOR4;
-                 else if (selected == 5) chosenColor = COLOR5;
-                 else if (selected == 6) chosenColor = COLOR6;
-                 else if (selected == 7) chosenColor = COLOR7;
-                 else if (selected == 8) chosenColor = COLOR8;
-                 else if (selected == 9) chosenColor = COLOR9;
-                 else if (selected == 10) chosenColor = COLOR10;
-                 else if (selected == 11) chosenColor = COLOR11;
-                 else if (selected == 12) chosenColor = COLOR12;
-                 else if (selected == 13) chosenColor = COLOR13;
-                 else if (selected == 14) chosenColor = COLOR14;
-                 else if (selected == 15) chosenColor = COLOR15;
-                 else if (selected == 16) chosenColor = COLOR16;
- 
-                 System.out.println("I was thinking of " + chosenColor + ".");
- 
-                 if (guess.equalsIgnoreCase(chosenColor)) {
-                     correct++;
-                 }
-             }
- 
-             System.out.println("\nGame Over");
-             System.out.println("You guessed " + correct + " out of 3 colors correctly.");
- 
-             // Ask if user wants to play again
-             System.out.print("\nWould you like to continue a Game? Type Yes/No: ");
-             playAgain = scanner.nextLine();
- 
-         } while (playAgain.equalsIgnoreCase("yes"));
- 
-         // Collect and print user info
-         System.out.print("\nEnter your name: ");
-         String userName = scanner.nextLine();
- 
-         System.out.print("Describe yourself: ");
-         String description = scanner.nextLine();
- 
-         System.out.print("Due Date (MM/DD): ");
-         String dueDate = scanner.nextLine();
- 
-         System.out.println("\nUsername: " + userName);
-         System.out.println("User Description: " + description);
-         System.out.println("Date: " + dueDate);
- 
-         // Write to output file
-         FileWriter output = new FileWriter("EspGameResults.txt");
-         output.write("Game Over\n");
-         output.write("Due Date: " + dueDate + "\n");
-         output.write("Username: " + userName + "\n");
-         output.write("User Description: " + description + "\n");
-         output.write("Date: " + dueDate + "\n");
-         output.close();
- 
-         System.out.println("\nGame result saved to EspGameResults.txt");
-         System.out.println("Programmer: Xander Rivera");
- 
-         scanner.close();
-     }
- }
- 
+// Imports for all useful methods used in this program
+import java.util.*;
+import java.io.*;
+
+public class ESPGame {
+
+	// Final variables for our round count and the name of the file made post-game when documenting the player's score
+    final static String FILE_OUTPUT = "EspGameResults.txt";
+    final static int ROUNDS = 3;
+
+    // Final variables for our color names 
+    final static String COLOR1 = "black";
+    final static String COLOR2 = "white";
+    final static String COLOR3 = "gray";
+    final static String COLOR4 = "silver";
+    final static String COLOR5 = "maroon";
+    final static String COLOR6 = "red";
+    final static String COLOR7 = "purple";
+    final static String COLOR8 = "fuchsia";
+    final static String COLOR9 = "green";
+    final static String COLOR10 = "lime";
+    final static String COLOR11 = "olive";
+    final static String COLOR12 = "yellow";
+    final static String COLOR13 = "navy";
+    final static String COLOR14 = "blue";
+    final static String COLOR15 = "teal";
+    final static String COLOR16 = "aqua";
+
+    public static void main(String[] args) throws FileNotFoundException {
+    	
+    	// Scanner for input
+        Scanner keyboard = new Scanner(System.in);
+        // Random number declaration
+        Random rand = new Random();
+        // Variable for menu 
+        int menu = 1;
+
+        while (menu == 1) {
+        	
+        	// Initial prompt
+            System.out.println("\nCMSC203 Assignment1: Test your ESP skills!");
+            System.out.println("Welcome to ESP - extrasensory perception!");
+            System.out.println("Would you please choose one of the 4 options from the menu:");
+            System.out.println("1 - Read and display the first 16 names of colors from a file.");
+            System.out.println("2 - Read and display the first 10 names of colors from a file.");
+            System.out.println("3 - Read and display the first 5 names of colors from a file.");
+            System.out.println("4 - Exit from the program");
+
+            System.out.print("Enter the option: ");
+            int userInput = keyboard.nextInt();
+
+            // Verifying input
+            if (userInput <= 0 || userInput >= 5) {
+                System.out.println("\nIncorrect choice, please select again.");
+                menu = 1;
+                continue;
+            } else if (userInput == 4) {
+                break;
+            }
+
+            // Limit variable for number of colors 
+            int limit;
+            if (userInput == 1) {
+                limit = 16;
+            } else if (userInput == 2) {
+                limit = 10;
+            } else {
+                limit = 5;
+            }
+
+            keyboard.nextLine(); // clear buffer
+            System.out.print("Enter the filename: ");
+            String filename = keyboard.nextLine();
+
+            try {
+            	// Making an object for the file to sit as we read from it
+                File colorFile = new File(filename);
+                Scanner fileScanner = new Scanner(colorFile);
+
+                System.out.println("There are " + limit + " colors from the file:");
+                
+                // Count used to better show # of colors when displaying
+                int count = 0;
+                while (fileScanner.hasNextLine() && count < limit) {
+                    String color = fileScanner.nextLine().trim().toLowerCase();
+                    count++;
+                    System.out.println(count + " " + color);
+                }
+                
+                fileScanner.close();
+
+                // Game guess rounds 
+                int correctGuesses = 0;
+                
+                // Ensures via final variable ROUNDS that theres only 3 rounds
+                for (int round = 1; round <= ROUNDS; round++) {
+                	
+                	// Random number that computer generates. +1 so we have no 0
+                	// Doesn't go beond 16 because the limit is 15 +1 so 16
+                    int randomNumber = rand.nextInt(limit) + 1;
+                    String computerColor = "";
+
+                    // Associate a number with the color
+                    if (randomNumber == 1) computerColor = COLOR1;
+                    else if (randomNumber == 2) computerColor = COLOR2;
+                    else if (randomNumber == 3) computerColor = COLOR3;
+                    else if (randomNumber == 4) computerColor = COLOR4;
+                    else if (randomNumber == 5) computerColor = COLOR5;
+                    else if (randomNumber == 6) computerColor = COLOR6;
+                    else if (randomNumber == 7) computerColor = COLOR7;
+                    else if (randomNumber == 8) computerColor = COLOR8;
+                    else if (randomNumber == 9) computerColor = COLOR9;
+                    else if (randomNumber == 10) computerColor = COLOR10;
+                    else if (randomNumber == 11) computerColor = COLOR11;
+                    else if (randomNumber == 12) computerColor = COLOR12;
+                    else if (randomNumber == 13) computerColor = COLOR13;
+                    else if (randomNumber == 14) computerColor = COLOR14;
+                    else if (randomNumber == 15) computerColor = COLOR15;
+                    else if (randomNumber == 16) computerColor = COLOR16;
+
+                    // User guesses
+                    System.out.print("\nRound " + round + ": Enter your guess: ");
+                    String userGuess = keyboard.nextLine().toLowerCase();
+
+                    // Validate guess: must match one of the constants up to the limit
+                    boolean valid = false;
+                    while (!valid) {
+                        if ((limit >= 1 && userGuess.equals(COLOR1)) ||
+                            (limit >= 2 && userGuess.equals(COLOR2)) ||
+                            (limit >= 3 && userGuess.equals(COLOR3)) ||
+                            (limit >= 4 && userGuess.equals(COLOR4)) ||
+                            (limit >= 5 && userGuess.equals(COLOR5)) ||
+                            (limit >= 6 && userGuess.equals(COLOR6)) ||
+                            (limit >= 7 && userGuess.equals(COLOR7)) ||
+                            (limit >= 8 && userGuess.equals(COLOR8)) ||
+                            (limit >= 9 && userGuess.equals(COLOR9)) ||
+                            (limit >= 10 && userGuess.equals(COLOR10)) ||
+                            (limit >= 11 && userGuess.equals(COLOR11)) ||
+                            (limit >= 12 && userGuess.equals(COLOR12)) ||
+                            (limit >= 13 && userGuess.equals(COLOR13)) ||
+                            (limit >= 14 && userGuess.equals(COLOR14)) ||
+                            (limit >= 15 && userGuess.equals(COLOR15)) ||
+                            (limit >= 16 && userGuess.equals(COLOR16))) {
+                            valid = true;
+                        } else {
+                            System.out.print("Invalid guess, enter a color from the list: ");
+                            userGuess = keyboard.nextLine().trim().toLowerCase();
+                        }
+                    }
+
+                    // Output computer guess then compares the user's guess
+                    System.out.println("Computer chose: " + computerColor);
+                    if (userGuess.equals(computerColor)) {
+                        System.out.println("Correct!");
+                        correctGuesses++;
+                    } else {
+                        System.out.println("Wrong!");
+                    }
+                }
+
+                // Collect user info after 3 rounds
+                System.out.print("\nEnter your name: ");
+                String name = keyboard.nextLine();
+                System.out.print("Enter a sentence that describes yourself: ");
+                String description = keyboard.nextLine();
+                System.out.print("Enter due date (MM/DD/YY): ");
+                String dueDate = keyboard.nextLine();
+
+                // Display results
+                System.out.println("\nGame Over");
+                System.out.println("You guessed " + correctGuesses + " out of " + ROUNDS + " colors correctly.");
+                System.out.println("Due Date: " + dueDate);
+                System.out.println("Username: " + name);
+                System.out.println("User Description: " + description);
+
+                // Save results to file
+                PrintWriter writer = new PrintWriter(new FileOutputStream(FILE_OUTPUT, true));
+                writer.println("\nGame Over");
+                writer.println("You guessed " + correctGuesses + " out of " + ROUNDS + " colors correctly.");
+                writer.println("Due Date: " + dueDate);
+                writer.println("Username: " + name);
+                writer.println("User Description: " + description);
+                writer.close();
+
+                // Case catch for no file found
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found. Please try again.");
+                menu = 1;
+            }
+        }
+
+        // Always close scanners.
+        keyboard.close();
+    }
+}
